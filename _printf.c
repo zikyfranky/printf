@@ -19,27 +19,26 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			switch (format[i + 1])
+			i++;
+			switch (format[i])
 			{
 			case 'c':
 				count += print_char(va_arg(args, int));
-				i += 2;
 				break;
 			case '%':
 				count += print_percentage();
-				i += 2;
 				break;
 			case 's':
 				count += print_string(va_arg(args, char *));
-				i += 2;
 				break;
 			default:
-				count += print_char(format[i++]);
+				count += print_char(format[--i]);
 				break;
 			}
 		}
 		else
-			count += print_char(format[i++]);
+			count += print_char(format[i]);
+		i++;
 	}
 	va_end(args);
 	return (count);
