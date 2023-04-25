@@ -61,3 +61,34 @@ int print_percentage(void)
 {
 	return (_putchar('%'));
 }
+
+/**
+ * print_number - prints a number
+ * @n: the number to print
+ *
+ * Return: length of character
+ */
+int print_number(int n)
+{
+	unsigned int nb;
+	int count = 0;
+
+	nb = n;
+	if (n < 0)
+	{
+		count += _putchar('-');
+		nb = -nb;
+	}
+	if (nb <= 9)
+	{
+		count += _putchar(nb + '0');
+		return (count);
+	}
+	if (nb > 9)
+	{
+		count += print_number(nb / 10) + 1;
+		_putchar(nb % 10 + '0');
+		return (count);
+	}
+	return (0);
+}

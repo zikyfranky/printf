@@ -24,6 +24,10 @@ int _printf(const char *format, ...)
 			i++;
 			switch (format[i])
 			{
+			case 'd':
+			case 'i':
+				count += print_number(va_arg(args, int));
+				break;
 			case 'c':
 				count += print_char(va_arg(args, int));
 				break;
