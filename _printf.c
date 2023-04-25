@@ -7,56 +7,43 @@
  */
 int _printf(const char *format, ...)
 {
-	int i, j, count = 0;
+	int i = 0, j, count = 0;
 	char *s;
 	va_list args;
 
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 	va_start(args, format);
-	i = 0;
-	if (format)
-		while (format[i])
+	while (format[i])
+	{
+		if (format[i] == '%')
 		{
-			if (format[i] == '%')
+			switch (format[i + 1])
 			{
-				i++;
-				switch (format[i])
-				{
-				case 'c':
-					count += _writer(va_arg(args, int));
-					break;
-				case '%':
-					count += _writer('%');
-					va_arg(args, int);
-					break;
-				case 's':
-					s = va_arg(args, char *);
-					j = 0;
-					while (s[j])
-						count += _writer(s[j++]);
-					break;
-				default:
-					i++;
-					va_arg(args, int);
-					continue;
-				}
+			case 'c':
+				count += _writer(va_arg(args, int));
+				i += 2;
+				break;
+			case '%':
+				count += _writer('%');
+				va_arg(args, int);
+				i += 2;
+				break;
+			case 's':
+				s = va_arg(args, char *);
+				j = 0;
+				while (s[j])
+					count += _writer(s[j++]);
+				i += 2;
+				break;
+			default:
+				count += _writer(format[i++]);
+				break;
 			}
-			else
-				count += _writer(format[i]);
-			i++;
 		}
+		else
+			count += _writer(format[i++]);
+	}
 	va_end(args);
 	return (count);
-}
-
-/**
- * _writer - Helper function to easily get bytes written
- * Makes use of the _putchar() function
- * @c: Character to wite to stdout
- * Return: the number of bytes written
- */
-int _writer(char c)
-{
-	int flag = _putchar(c);
-
-	return (flag >= 0 ? flag : 0);
 }
