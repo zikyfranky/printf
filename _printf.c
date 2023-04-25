@@ -7,11 +7,12 @@
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, j, count = 0;
-	char *s;
+	int i = 0, count = 0;
 	va_list args;
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
 	va_start(args, format);
 	while (format[i])
@@ -21,28 +22,24 @@ int _printf(const char *format, ...)
 			switch (format[i + 1])
 			{
 			case 'c':
-				count += _writer(va_arg(args, int));
+				count += print_char(va_arg(args, int));
 				i += 2;
 				break;
 			case '%':
-				count += _writer('%');
-				va_arg(args, int);
+				count += print_percentage();
 				i += 2;
 				break;
 			case 's':
-				s = va_arg(args, char *);
-				j = 0;
-				while (s[j])
-					count += _writer(s[j++]);
+				count += print_string(va_arg(args, char *));
 				i += 2;
 				break;
 			default:
-				count += _writer(format[i++]);
+				count += print_char(format[i++]);
 				break;
 			}
 		}
 		else
-			count += _writer(format[i++]);
+			count += print_char(format[i++]);
 	}
 	va_end(args);
 	return (count);
