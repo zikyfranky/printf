@@ -46,7 +46,10 @@ int print_char(char c)
  */
 int print_string(char *str)
 {
-	return (_puts(str));
+	if (str == NULL)
+		return (_puts("(null)"));
+	else
+		return (_puts(str));
 }
 
 /**
