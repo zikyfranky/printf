@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * _printf - Custom made printf function
  * @format: format.
