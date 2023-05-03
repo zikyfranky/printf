@@ -40,6 +40,18 @@ int _printf(const char *format, ...)
 			case 'b':
 				count += print_binary(va_arg(args, unsigned int));
 				break;
+			case 'u':
+				count += print_uint(va_arg(args, unsigned int));
+				break;
+			case 'o':
+				count += print_octal(va_arg(args, unsigned int));
+				break;
+			case 'x':
+				count += print_hex(va_arg(args, unsigned int), FALSE);
+				break;
+			case 'X':
+				count += print_hex(va_arg(args, unsigned int), TRUE);
+				break;
 			default:
 				count += print_char(format[--i]);
 				break;

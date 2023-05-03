@@ -120,3 +120,89 @@ int print_binary(unsigned int n)
 	}
 	return (count);
 }
+
+/**
+ * print_uint - prints an unsigned number
+ * @n: the number
+ *
+ * Return: length of character
+ */
+int print_uint(unsigned int n)
+{
+	int count = 0;
+
+	if (n <= 9)
+	{
+		count += _putchar(n + '0');
+		return (count);
+	}
+	if (n > 9)
+	{
+		count += print_uint(n / 10) + 1;
+		_putchar(n % 10 + '0');
+		return (count);
+	}
+	return (0);
+}
+
+/**
+ * print_octal - prints an octal representation of @n
+ * @n: the number
+ *
+ * Return: length of character
+ */
+int print_octal(unsigned int n)
+{
+	int count = 0, octal[64] = {0}, j, i = 0;
+
+	if (n == 0)
+	{
+		count += _putchar('0');
+		return (count);
+	}
+
+	while (n > 0)
+	{
+		octal[i++] = n % 8;
+		n /= 8;
+	}
+	for (j = i - 1; j >= 0; j--)
+	{
+		count += _putchar(octal[j] + '0');
+	}
+	return (count);
+}
+
+/**
+ * print_hex - prints hex value of @n
+ * @n: the number
+ *
+ * Return: length of character
+ */
+int print_hex(unsigned int n, int uppercase)
+{
+	int count = 0, j, i = 0;
+	char hex[100];
+
+	if (n == 0)
+	{
+		count += _putchar('0');
+		return (count);
+	}
+
+	while (n > 0)
+	{
+		unsigned int remainder = n % 16;
+
+		if (remainder < 10)
+			hex[i++] = remainder + '0';
+		else
+			hex[i++] = remainder + (uppercase == TRUE ? '7' : 'W');
+		n /= 16;
+	}
+
+	for (j = i - 1; j >= 0; j--)
+		count += _putchar(hex[j]);
+
+	return (count);
+}
