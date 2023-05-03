@@ -92,3 +92,31 @@ int print_number(int n)
 	}
 	return (0);
 }
+
+/**
+ * print_binary - prints a binary representation of @n
+ * @n: the number
+ *
+ * Return: length of character
+ */
+int print_binary(unsigned int n)
+{
+	int count = 0, binary[64] = {0}, j, i = 0;
+
+	if (n == 0)
+	{
+		count += _putchar('0');
+		return (count);
+	}
+
+	while (n > 0)
+	{
+		binary[i++] = n % 2;
+		n /= 2;
+	}
+	for (j = i - 1; j >= 0; j--)
+	{
+		count += _putchar(binary[j] + '0');
+	}
+	return (count);
+}
